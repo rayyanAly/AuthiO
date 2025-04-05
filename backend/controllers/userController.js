@@ -214,7 +214,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
     // Email content http://localhost:3000 / https://authio-5yv3.onrender.com/  //
 	
-    const resetUrl = `https://authio-5yv3.onrender.com//reset-password/${resetToken}`; 
+    const resetUrl = `https://authio-5yv3.onrender.com/reset-password/${resetToken}`; 
     const mailOptions = {
         from: process.env.EMAIL_FROM, 
         to: user.email,
