@@ -1,0 +1,41 @@
+{
+	"name": "authio",
+	"type": "module",
+	"version": "1.0.0",
+	"description": "",
+	"main": "server.js",
+	"scripts": {
+		"start": "node backend/server",
+		"server": "nodemon backend/server",
+		"client": "npm run start --prefix frontend",
+		"dev": "concurrently \"npm run server\" \"npm run client\"",
+		"data:import": "node backend/seeder",
+		"data:destroy": "node backend/seeder -d"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+ssh:/git@github.com:rayyanAly/AuthiO.git"
+	},
+	"author": "RayyanAly",
+	"license": "ISC",
+	"bugs": {
+		"url": "https://github.com/rayyanAly/AuthiO/issues"
+	},
+	"homepage": "https://github.com/rayyanAly/AuthiO/issues#readme",
+	"dependencies": {
+		"@sendgrid/mail": "^8.1.4",
+		"bcryptjs": "^2.4.3",
+		"colors": "^1.4.0",
+		"dotenv": "^16.3.1",
+		"express": "^4.18.2",
+		"express-async-handler": "^1.2.0",
+		"jsonwebtoken": "^9.0.2",
+		"mongoose": "^7.5.2",
+		"multer": "^1.4.5-lts.1",
+		"nodemailer": "^6.10.0"
+	},
+	"devDependencies": {
+		"concurrently": "^8.2.1",
+		"nodemon": "^3.0.1"
+	}
+}
