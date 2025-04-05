@@ -11,6 +11,8 @@ import {
 	userUpdateReducer,
 	forgotPasswordReducer, 
 	resetPasswordReducer,
+	userOtpReducer, 
+	userVerifyOtpReducer 
 } from './reducers/userReducer';
 
 const reducer = combineReducers({
@@ -23,6 +25,8 @@ const reducer = combineReducers({
 	userUpdate: userUpdateReducer,
 	forgotPassword: forgotPasswordReducer,
     resetPassword: resetPasswordReducer,
+	userOtp: userOtpReducer,
+	userVerifyOtp: userVerifyOtpReducer,
 });
 
 const userInfoFromStorage = localStorage.getItem('userInfo')

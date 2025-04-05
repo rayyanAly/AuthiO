@@ -10,6 +10,8 @@ import {
     updateUserProfile,
     forgotPassword,
 	resetPassword,
+    sendVerificationOtp,
+	verifyOtp,
 } from '../controllers/userController.js';
 import { admin, protect } from '../middlewares/authMiddleware.js';
 
@@ -25,6 +27,10 @@ router.post('/reset-password/:token', resetPassword);
 router.route('/profile')
     .get(protect, getUserProfile)
     .put(protect, updateUserProfile);
+
+router.post('/send-otp', protect, sendVerificationOtp);
+router.post('/verify-otp', protect, verifyOtp);
+    
 
 // Admin Routes
 router.route('/')

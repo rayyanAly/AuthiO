@@ -214,7 +214,7 @@ const forgotPassword = asyncHandler(async (req, res) => {
 
     // Email content http://localhost:3000 / https://x-store-8chq.onrender.com  //
 	
-    const resetUrl = `https://x-store-8chq.onrender.com/reset-password/${resetToken}`; 
+    const resetUrl = `http://localhost:3000/reset-password/${resetToken}`; 
     const mailOptions = {
         from: process.env.EMAIL_FROM, 
         to: user.email,
@@ -266,6 +266,95 @@ const resetPassword = asyncHandler(async (req, res) => {
 	res.json({ message: 'Password has been reset successfully' });
   });  
 
+/**
+ * @desc    Send OTP for Email Verification
+ * @route   POST /api/users/send-otp
+ * @access  Private
+ */
+const sendVerificationOtp = asyncHandler(async (req, res) => {
+	const user = await User.findById(req.user._id);
+
+	if (!user) {
+		res.status(404);
+		throw new Error('User not found');
+	}
+
+	if (user.isVerified) {
+		res.status(400);
+		throw new Error('User is already verified');
+	}
+
+	// Generate 6-digit OTP
+	const otp = Math.floor(100000 + Math.random() * 900000).toString();
+	user.otp = otp;
+	user.otpExpires = Date.now() + 10 * 60 * 1000; // 10 mins
+	await user.save();
+
+	// Email config
+	const transporter = nodemailer.createTransport({
+		host: 'smtp.sendgrid.net',
+		port: 465,
+		secure: true,
+		auth: {
+			user: 'apikey',
+			pass: process.env.SENDGRID_API_KEY,
+		},
+	});
+
+	const mailOptions = {
+		from: process.env.EMAIL_FROM,
+		to: user.email,
+		subject: 'Your Verification OTP',
+		html: `<p>Hello ${user.name},</p>
+		       <p>Your OTP is: <strong>${otp}</strong></p>
+		       <p>This OTP will expire in 10 minutes.</p>`,
+	};
+
+	try {
+		await transporter.sendMail(mailOptions);
+		res.json({ message: 'OTP sent to your email address' });
+	} catch (error) {
+		console.error(error);
+		res.status(500);
+		throw new Error('Failed to send OTP');
+	}
+});
+
+/**
+ * @desc    Verify OTP
+ * @route   POST /api/users/verify-otp
+ * @access  Private
+ */
+const verifyOtp = asyncHandler(async (req, res) => {
+	const userId = req.user._id;
+	const { otp } = req.body;
+
+	const user = await User.findById(userId);
+
+	if (!user) {
+		res.status(404);
+		throw new Error('User not found');
+	}
+
+	if (!user.otp || !user.otpExpires || user.otpExpires < Date.now()) {
+		res.status(400);
+		throw new Error('OTP is invalid or has expired');
+	}
+
+	if (user.otp !== otp) {
+		res.status(400);
+		throw new Error('Incorrect OTP');
+	}
+
+	// Success: clear OTP and mark verified
+	user.otp = undefined;
+	user.otpExpires = undefined;
+	user.isVerified = true;
+	await user.save();
+
+	res.json({ message: 'Account verified successfully' });
+});
+
 export {
 	authUser,
 	deleteUser,
@@ -277,4 +366,6 @@ export {
 	updateUserProfile,
 	forgotPassword,
 	resetPassword,
+	sendVerificationOtp,
+	verifyOtp,
 };

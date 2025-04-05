@@ -14,26 +14,31 @@ import ResetPassword from './screens/ResetPassword';
 const App = () => {
 	return (
 		<BrowserRouter>
-			<Header />
-			<Flex
-				as='main'
-				mt='72px'
-				direction='column'
-				py='6'
-				px='6'
-				bgColor='gray.200'>
-				<Routes>
-					<Route path='/' element={<HomeScreen />} />
-					<Route path='/login' element={<LoginScreen />} />
-					<Route path='/register' element={<RegisterScreen />} />
-					<Route path="/forgot-password" element={<ForgotPassword />} />
-       				<Route path="/reset-password/:token" element={<ResetPassword />} />
-					<Route path='/profile' element={<ProfileScreen />} />
-					<Route path='/admin/userlist' element={<UserListScreen />} />
-					<Route path='/admin/user/:id/edit' element={<UserEditScreen />} />
-				</Routes>
+			<Flex direction="column" minH="100vh">
+				<Header />
+				<Flex
+					as="main"
+					mt="72px"
+					direction="column"
+					py="6"
+					px="6"
+					bgColor="gray.200"
+					flex="1"
+				>
+					<Routes>
+						<Route path="/" element={<LoginScreen />} />
+						<Route path="/login" element={<LoginScreen />} />
+						<Route path="/home" element={<HomeScreen />} />
+						<Route path="/register" element={<RegisterScreen />} />
+						<Route path="/forgot-password" element={<ForgotPassword />} />
+						<Route path="/reset-password/:token" element={<ResetPassword />} />
+						<Route path="/profile" element={<ProfileScreen />} />
+						<Route path="/admin/userlist" element={<UserListScreen />} />
+						<Route path="/admin/user/:id/edit" element={<UserEditScreen />} />
+					</Routes>
+				</Flex>
+				<Footer />
 			</Flex>
-			<Footer />
 		</BrowserRouter>
 	);
 };

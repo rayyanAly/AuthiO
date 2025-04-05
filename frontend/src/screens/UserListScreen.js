@@ -64,63 +64,61 @@ const UserListScreen = () => {
 				<Box bgColor='white' rounded='lg' shadow='lg' px='5' py='5'>
 					<Flex overflowX="auto">
 					<Table variant='striped' colorScheme='gray' size='sm'>
-						<Thead>
-							<Tr>
-								<Th>ID</Th>
-								<Th>NAME</Th>
-								<Th>EMAIL</Th>
-								<Th>ADMIN</Th>
-								<Th></Th>
+					<Thead>
+						<Tr>
+							<Th>ID</Th>
+							<Th>NAME</Th>
+							<Th>EMAIL</Th>
+							<Th>ADMIN</Th>
+							<Th>VERIFIED</Th> {/* ✅ New column */}
+							<Th></Th>
+						</Tr>
+					</Thead>
+					<Tbody>
+						{users.map((user) => (
+							<Tr key={user._id}>
+								<Td>{user._id}</Td>
+								<Td>{user.name}</Td>
+								<Td>
+									<a href={`mailto:${user.email}`}>{user.email}</a>
+								</Td>
+								<Td>
+									{user.isAdmin ? (
+										<Icon as={IoCheckmarkCircleSharp} color='green.600' w='8' h='8' />
+									) : (
+										<Icon as={IoCloseCircleSharp} color='red.600' w='8' h='8' />
+									)}
+								</Td>
+								<Td>
+									{user.isVerified ? (
+										<Icon as={IoCheckmarkCircleSharp} color='green.600' w='8' h='8' />
+									) : (
+										<Icon as={IoCloseCircleSharp} color='red.600' w='8' h='8' />
+									)}
+								</Td>
+								<Td>
+									<Flex justifyContent='flex-end' alignItems='center'>
+										<Button
+											mr='4'
+											as={RouterLink}
+											to={`/admin/user/${user._id}/edit`}
+											colorScheme='teal'>
+											<Icon as={IoPencilSharp} color='white' size='sm' />
+										</Button>
+										<Button
+											mr='4'
+											colorScheme='red'
+											onClick={() => deleteHandler(user._id)}>
+											<Icon as={IoTrashBinSharp} color='white' size='sm' />
+										</Button>
+									</Flex>
+								</Td>
 							</Tr>
-						</Thead>
-						<Tbody>
-							{users.map((user) => (
-								<Tr key={user._id}>
-									<Td>{user._id}</Td>
-									<Td>{user.name}</Td>
-									<Td>
-										<a href={`mailto:${user.email}`}>{user.email}</a>
-									</Td>
-									<Td>
-										{user.isAdmin ? (
-											<Icon
-												as={IoCheckmarkCircleSharp}
-												color='green.600'
-												w='8'
-												h='8'
-											/>
-										) : (
-											<Icon
-												as={IoCloseCircleSharp}
-												color='red.600'
-												w='8'
-												h='8'
-											/>
-										)}
-									</Td>
-									<Td>
-										<Flex justifyContent='flex-end' alignItems='center'>
-											<Button
-												mr='4'
-												as={RouterLink}
-												to={`/admin/user/${user._id}/edit`}
-												colorScheme='teal'>
-												<Icon as={IoPencilSharp} color='white' size='sm' />
-											</Button>
-											<Button
-												mr='4'
-												colorScheme='red'
-												onClick={() => deleteHandler(user._id)}>
-												<Icon as={IoTrashBinSharp} color='white' size='sm' />
-											</Button>
-										</Flex>
-									</Td>
-								</Tr>
-							))}
-						</Tbody>
-					</Table>
-					</Flex>
-				</Box>
+						))}
+					</Tbody>
+				  </Table>
+				</Flex>
+			 </Box>
 			)}
 		</>
 	);

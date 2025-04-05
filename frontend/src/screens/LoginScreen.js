@@ -25,7 +25,7 @@ const LoginScreen = () => {
 	const navigate = useNavigate();
 
 	const [searchParams] = useSearchParams();
-	let redirect = searchParams.get('redirect') || '/';
+	let redirect = searchParams.get('redirect') || '/home';
 
 	const [email, setEmail] = useState('');
 	const [password, setPassword] = useState('');

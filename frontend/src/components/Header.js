@@ -108,12 +108,6 @@ const Header = () => {
 							<MenuItem as={RouterLink} to='/admin/userlist'>
 								User List
 							</MenuItem>
-							<MenuItem as={RouterLink} to='/admin/productlist'>
-								Product List
-							</MenuItem>
-							<MenuItem as={RouterLink} to='/admin/orderlist'>
-								Order List
-							</MenuItem>
 						</MenuList>
 					</Menu>
 				)}

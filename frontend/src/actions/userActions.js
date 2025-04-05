@@ -31,6 +31,12 @@ import {
 	USER_RESET_PASSWORD_REQUEST,
 	USER_RESET_PASSWORD_SUCCESS,
 	USER_RESET_PASSWORD_FAIL,
+	USER_OTP_REQUEST,
+	USER_OTP_SUCCESS,
+	USER_OTP_FAIL,
+	USER_VERIFY_OTP_REQUEST,
+	USER_VERIFY_OTP_SUCCESS,
+	USER_VERIFY_OTP_FAIL,
 } from '../constants/userConstants';
 
 export const login = (email, password) => async (dispatch) => {
@@ -281,6 +287,60 @@ export const forgotPassword = (email) => async (dispatch) => {
 	  dispatch({
 		type: USER_RESET_PASSWORD_FAIL,
 		payload: error.response && error.response.data.message ? error.response.data.message : error.message,
+	  });
+	}
+  };
+
+  
+  export const sendOtp = () => async (dispatch, getState) => {
+	try {
+	  dispatch({ type: USER_OTP_REQUEST });
+  
+	  const {
+		userLogin: { userInfo },
+	  } = getState();
+  
+	  const config = {
+		headers: { Authorization: `Bearer ${userInfo.token}` },
+	  };
+  
+	  await axios.post('/api/users/send-otp', {}, config);
+  
+	  dispatch({ type: USER_OTP_SUCCESS });
+	} catch (error) {
+	  dispatch({
+		type: USER_OTP_FAIL,
+		payload: error.response?.data?.message || error.message,
+	  });
+	}
+  };
+  
+  export const verifyOtp = (otp) => async (dispatch, getState) => {
+	try {
+	  dispatch({ type: USER_VERIFY_OTP_REQUEST });
+  
+	  const {
+		userLogin: { userInfo },
+	  } = getState();
+  
+	  const config = {
+		headers: { Authorization: `Bearer ${userInfo.token}` },
+	  };
+  
+	  await axios.post('/api/users/verify-otp', { otp }, config);
+  
+	  const updatedUser = { ...userInfo, isVerified: true };
+  
+	  localStorage.setItem('userInfo', JSON.stringify(updatedUser));
+  
+	  dispatch({
+		type: USER_VERIFY_OTP_SUCCESS,
+		payload: updatedUser,
+	  });
+	} catch (error) {
+	  dispatch({
+		type: USER_VERIFY_OTP_FAIL,
+		payload: error.response?.data?.message || error.message,
 	  });
 	}
   };
