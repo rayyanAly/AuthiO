@@ -73,20 +73,13 @@ Edit
 ### 1️⃣ Clone the repository
 
 ```bash
-git clone https://github.com/yourusername/mern-user-auth.git
-cd mern-user-auth
+git clone https://github.com/rayyanAly/AuthiO.git
+cd AuthiO
 2️⃣ Install Backend Dependencies
-bash
-Copy
-Edit
-cd backend
-npm install (in the root not in the backend folder)
+npm install (in the root folder not in the backend folder)
 3️⃣ Set Environment Variables
-Create a .env file inside root folder not in the backend or frontend:
+Create a .env file inside root folder not in the backend or frontend folder
 
-env
-Copy
-Edit
 NODE_ENV = production or development    #depends on your env but write only one of the following
 PORT=5000
 FRONTEND_URL=http://localhost:3000
