@@ -119,7 +119,7 @@ const RegisterScreen = () => {
 
 				<Flex pt='10'>
 					<Text fontWeight='semibold'>
-						Already a Customer?{' '}
+						Already a User?{' '}
 						<Link as={RouterLink} to='/login'>
 							Click here to login
 						</Link>

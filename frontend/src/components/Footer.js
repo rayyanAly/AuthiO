@@ -6,7 +6,7 @@ const Footer = () => {
 	return (
 		<Flex as="footer" justifyContent="center" py="5" bg="gray.100" mt="auto">
 			<Text fontSize="sm" color="gray.600">
-				&copy; {currentYear}. AuthiO. All Rights Reserved.
+				&copy; {currentYear}. Auth.iO. All Rights Reserved.
 			</Text>
 		</Flex>
 	);

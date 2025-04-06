@@ -55,7 +55,7 @@ const Header = () => {
 					letterSpacing='wide'
 					fontWeight='bold'
 					>
-					AuthiO
+					Auth.iO
 				</Heading>
 			</Link>
 
