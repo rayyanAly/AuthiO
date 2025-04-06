@@ -62,17 +62,12 @@ A complete user authentication system built with the **MERN stack** (MongoDB, Ex
 
 
 
-yaml
-Copy
-Edit
-
 ---
 
 ## 🔧 Getting Started
 
 ### 1️⃣ Clone the repository
 
-```bash
 git clone https://github.com/rayyanAly/AuthiO.git
 cd AuthiO
 2️⃣ Install Backend Dependencies
